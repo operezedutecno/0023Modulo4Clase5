@@ -4,7 +4,7 @@ let listado = []
 
 
 let boton = $("#btn-registrar1")
-console.log(boton);
+// console.log(boton);
 
 $(document).ready(function(){
 
@@ -35,8 +35,19 @@ $(document).ready(function(){
         $(this).css({ "background" : "white", "color": "black"})
     })
 
+    $(document).on("click",".btn-eliminar", function() {
+        if(confirm("¿Seguro que desea eliminar?")){
+            let indice = $(this).attr('id')
+            listado.splice(indice,1)
+            listarElectrodomesticos()
+        }
+        
+    })
+
     function listarElectrodomesticos() {
         $("#listado tbody").html("")
+        $("#total-registros").text(listado.length)
+        // $("#total-registros").html(`<span class="text-danger">${listado.length}</span>`)
         let contador = 0
         for (const electrodomestico of listado) {
             contador+=1
@@ -46,7 +57,7 @@ $(document).ready(function(){
                     <td>${electrodomestico.nombre}</td>
                     <td class="text-capitalize">${electrodomestico.color}</td>
                     <td>
-                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                        <button id="${contador-1}" class="btn btn-sm btn-danger btn-eliminar">Eliminar</button>
                     </td>
                 </tr>
             `)
